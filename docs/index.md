@@ -258,4 +258,60 @@ Get all the `UEO` (*Unité d'Enseignement d'Ouverture*) available.
 
 > *Note :*  All the `UEO` starts with "ueo" so that you shouldn't get anything else than the letter `u`.
 
+# Digging deeper
+
+Danger ! Do not try this except you DO know what you're doing.
+
+## Exporting Agenda (TODO)
+- `/api/exportAgenda/diplome/{formation}`
+- `/api/exportAgenda/salle/{salle}`
+- `/api/exportAgenda/enseignant/{enseignant:uapvHarpege}`
+- `/api/exportAgenda/enseignement/{enseignement}` (Linked to "hyperplanning")
+- `/api/exportAgenda/tdoption/{tdoption}`
+
+
+## List of unexplored API endpoints :
+- `/api/elements`
+- `/api/enseignants`
+- `/api/salles`
+- `/api/matieres/EUO`
+- `/api/matieres/UE`
+- `/api/application`
+- `/api/tdoptions`
+- `/api/isOpen`
+- `/api/auth`
+- `/api/auth/login` (POST `application/json`)
+- `/api/auth/logout` (POST `application/json`)
+- `/api/events_perso`
+- `/api/events_promotion`
+- `/api/events_tdoption`
+- `/api/events_perso_tdoption`
+- `/api/events_favori`
+- `/api/events_salle`
+- `/api/events_enseignant`
+- `/api/events_matiere`
+- `??/ping` (`api/application/ping`, always return 500)
+- `/api/import` (POST `application/json`)
+
+## User api
+
+- `api/users`
+- `api/application"`
+
+- `api/users?keyword=`
+- `api/users/favoris`
+- `api/users/addFavoris` (POST `application/json`)
+- `api/users/validate` (POST `application/json`)
+- `api/users/{id}/activate` (POST `application/json`)
+- `api/users/{id}/` (POST `application/json` = update)
+
+`isStudent` = `uapv` in `uid` (LocalStorage)
+
+
+
+## List of useful things
+- An `Authorization` token header is under `Basic` + `YTIwZTZhY2EtZWU4My00NGJjLTgwMzMtYjQxZjMwNzhjMmI2OmMxOTlmOWM4LTA1NDgtNGJlNzk2NTUtN2VmN2Q3YmY5ZDIw`. It output as console error and look very hardcoded-alike
+- `/api/import`
+- `/api/auth`
+
 
