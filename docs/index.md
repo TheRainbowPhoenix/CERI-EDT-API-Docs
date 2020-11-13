@@ -17,7 +17,7 @@ The answer of most of (any ?) api call is a JSON object, matching the following 
 ```
 So that, checking if `results` is a key of the root JSON could get you a quick idea on how valid the answer is. I've discovered that sometimes the error code is served over the `HTTP 200` answer, so don't forget to check this too !
 
-# Working with `Salles`
+# Working with *Salles*
 
 ## `Salle` object
 
@@ -27,7 +27,7 @@ So that, checking if `results` is a key of the root JSON could get you a quick i
 | code         | A-Z0-9_ String code | The internal codename of the classroom |
 | searchString | String              | Meaningful items for searches |
 
-## `Sites` available
+## *Sites* available
 
  - `AGROSCIENCES`, sometimes referred as `Agrosciences` (so it'd good to ignore case checks) 
  - `CERI`
@@ -139,11 +139,44 @@ The `duree` can hold the following values :
 
 All the objects under `results` are `SalleDisponibilite`, described as follow :
 
-## `SalleDisponibilite` object
+## *SalleDisponibilite* object
 
 | field        | type                | description |
 | -----------: | :------------------ | :---------- |
 | libelle      | String with spaces  | The name given to the classroom |
 | capacite     | Number in String    | The max count of people that the classroom can have. |
 
+# Working with *Elements*
 
+## *Element* object
+
+| field        | type                | description |
+| -----------: | :------------------ | :---------- |
+| name         | String with spaces  | The name given to the class |
+| code         | A-Z0-9_ String code | The internal codename of the class |
+| searchString | String              | Meaningful items for searches |
+
+
+## `GET api/elements`
+
+Get all classes on the whole campus. The `Element` object is listed under a `name` list, identified by a `letter` string.
+
+JSON answer example :
+```js
+{
+  "results": [
+    {
+      "letter": "INFORMATIQUE",
+      "names": [
+        {
+          "name": "m2 inge du logiciel de la societe num (ilsen)",
+          "code": "2-M2EN",
+          "searchString": "INFORMATIQUEm2 inge du logiciel de la societe num (ilsen)"
+        },
+      ]
+    }
+  ]
+}
+```
+
+> *Note :* The author of this unofficial documentation would like to raise the point that there exist classes under the `null` category. Be careful and always check everything !
