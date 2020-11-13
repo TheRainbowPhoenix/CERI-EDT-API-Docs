@@ -19,7 +19,7 @@ So that, checking if `results` is a key of the root JSON could get you a quick i
 
 # Working with *Salles*
 
-## `Salle` object
+## *Salle* object
 
 | field        | type                | description |
 | -----------: | :------------------ | :---------- |
@@ -180,3 +180,82 @@ JSON answer example :
 ```
 
 > *Note :* The author of this unofficial documentation would like to raise the point that there exist classes under the `null` category. Be careful and always check everything !
+
+# Working with *Matieres*
+
+## *Matiere* object
+
+| field        | type                | description |
+| -----------: | :------------------ | :---------- |
+| name         | String with spaces  | The name given to the subject |
+| code         | A-Z0-9_ String code | The internal codename of the subject |
+| searchString | String              | Meaningful items for searches |
+
+## `GET api/matieres/UE`
+
+Get all the `UE` (*Unité d'Enseignement*) available.
+
+```js
+{
+  "results": [
+    {
+      "letter": "u",
+      "names": [
+        {
+          "name": "uce 2 securite des services web",
+          "code": "S-E06-0662",
+          "searchString": "uce 2 securite des services web"
+        }
+      ]
+    },
+    {
+      "letter": "(",
+      "names": [
+        {
+          "name": "(option) botanique",
+          "code": "S-U02-1046",
+          "searchString": "(option) botanique"
+        },
+        {
+          "name": "(option) methodes d'inventaires faunistiques",
+          "code": "S-U02-1047",
+          "searchString": "(option) methodes d'inventaires faunistiques"
+        }
+      ]
+    }
+  ]
+}
+```
+
+It's a bit special since you have to work with first letter of the name (given that you can't really known it at first) but it could work like 90% if you use the `u` (since most UE begin with "uce" or "ue")
+
+## `GET api/matieres/UEO`
+
+Get all the `UEO` (*Unité d'Enseignement d'Ouverture*) available.
+
+```js
+{
+  "results": [
+    {
+      "letter": "u",
+      "names": [
+        {
+          "name": "ueo activite culturelle s1",
+          "code": "T-U07-9201",
+          "searchString": "ueoactiviteculturelles1"
+        },
+        {
+          "name": "ueo activite culturelle s2",
+          "code": "T-U07-9202",
+          "searchString": "ueoactiviteculturelles2"
+        }
+      ]
+    }
+  ]
+}
+
+```
+
+> *Note :*  All the `UEO` starts with "ueo" so that you shouldn't get anything else than the letter `u`.
+
+
