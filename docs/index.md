@@ -1,37 +1,149 @@
-## Welcome to GitHub Pages
+# Before you start
 
-You can use the [editor on GitHub](https://github.com/TheRainbowPhoenix/CERI-EDT-API-Docs/edit/main/docs/index.md) to maintain and preview the content for your website in Markdown files.
+The main API endpoint is, at time of the writing, located at `https://edt-api.univ-avignon.fr/app.php/`. Even if the url looks odd with `app.php/`, you have to use it that way.
+This url will be later referred as `base_url` or `api_url`, so when you read `api_url/api/something` you have to understand that the full url is `https://edt-api.univ-avignon.fr/app.php/api_url/api/something`.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Basic REST answer
 
-### Markdown
+The answer of most of (any ?) api call is a JSON object, matching the following structure :
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+```js
+{
+  "results": [
+    {
+        // Something meaningful ...
+    }
+}
+```
+So that, checking if `results` is a key of the root JSON could get you a quick idea on how valid the answer is. I've discovered that sometimes the error code is served over the `HTTP 200` answer, so don't forget to check this too !
 
-```markdown
-Syntax highlighted code block
+# Working with `Salles`
 
-# Header 1
-## Header 2
-### Header 3
+## `Salle` object
 
-- Bulleted
-- List
+| field        | type                | description |
+| -----------: | :------------------ | :---------- |
+| name         | String with spaces  | The name given to the classroom |
+| code         | A-Z0-9_ String code | The internal codename of the classroom |
+| searchString | String              | Meaningful items for searches |
 
-1. Numbered
-2. List
+## `Sites` available
 
-**Bold** and _Italic_ and `Code` text
+ - `AGROSCIENCES`, sometimes referred as `Agrosciences` (so it'd good to ignore case checks) 
+ - `CERI`
+ - `Centre-ville`
+ - `IUT`
 
-[Link](url) and ![Image](src)
+
+## `GET api/salles`
+
+Get all classroom on the whole campus. The `Salle` object is listed under a `name` list, identified by a `letter` string.
+
+JSON answer example :
+```js
+{
+  "results": [
+    {
+      "letter": "Agrosciences",
+      "names": [
+        {
+          "name": "a002 (cmi) v",
+          "code": "AGR_A002",
+          "searchString": "a002(cmi)vAgrosciencesa002 (cmi) v"
+        }
+      ]
+    },
+    {
+      "letter": "CERI",
+      "names": [
+        {
+          "name": "amphi ada",
+          "code": "CERI_ADA",
+          "searchString": "amphiadaCERIamphi ada"
+        }
+      ]
+    }
+  ]
+}
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## `GET api/salles/disponibilite`
 
-### Jekyll Themes
+Get available classrooms for the given campus at a given time.
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/TheRainbowPhoenix/CERI-EDT-API-Docs/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+The `GET` request had to include the following parameters :
 
-### Support or Contact
+| field        | example             | description |
+| -----------: | :------------------ | :---------- |
+| site         | CERI                | One of the previously listed `Sites` |
+| duree        | 3                   | Time in hours, with `.30` for -"h30" |
+| debut        | 10.30               | Start hour, with `.30` for -"h30 |
+| date         | 2020-11-13          | Date in YYYY-MM-DD |
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+And the matching request :
+`base_url/api/salles/disponibilite?site=CERI&duree=3&debut=10.30&date=2020-11-13`
+That would produce a similar output :
+```js
+{
+  "results": [
+    {
+      "libelle": "cisco = c 133 réseaux",
+      "capacite": "26"
+    },
+    {
+      "libelle": "s6 = c 022",
+      "capacite": "50"
+    }
+  ]
+}
+```
+
+The `debut` can hold the following values :
+
+| value   | Time value |
+| :------ | ---------: |
+| 8       | 8h00       |
+| 8.30    | 8h30       |
+| 9       | 9h00       |
+| 9.30    | 9h30       |
+| 10      | 10h00      |
+| 10.30   | 10h30      |
+| 11      | 11h00      |
+| 11.30   | 11h30      |
+| 12      | 12h00      |
+| 12.30   | 12h30      |
+| 13      | 13h00      |
+| 13.30   | 13h30      |
+| 14      | 14h00      |
+| 14.30   | 14h30      |
+| 15      | 15h00      |
+| 15.30   | 15h30      |
+| 16      | 16h00      |
+| 16.30   | 16h30      |
+| 17      | 17h00      |
+| 17.30   | 17h30      |
+| 18      | 18h00      |
+| 18.30   | 18h30      |
+| 19      | 19h00      |
+| 19.30   | 19h30      |
+
+The `duree` can hold the following values :
+
+| value   | Time value |
+| :------ | ---------: |
+| 1.30    | 1h30       |
+| 3       | 3h00       |
+| 4.30    | 4h30       |
+| 6       | 6h00       |
+
+
+All the objects under `results` are `SalleDisponibilite`, described as follow :
+
+## `SalleDisponibilite` object
+
+| field        | type                | description |
+| -----------: | :------------------ | :---------- |
+| libelle      | String with spaces  | The name given to the classroom |
+| capacite     | Number in String    | The max count of people that the classroom can have. |
+
+
