@@ -313,6 +313,88 @@ Get all the `UEO` (*Unité d'Enseignement d'Ouverture*) available.
 
 > *Note :*  All the `UEO` starts with "ueo" so that you shouldn't get anything else than the letter `u`.
 
+# Working with *Enseignants*
+
+## *Enseignant* object
+
+| field        | type                | description |
+| -----------: | :------------------ | :---------- |
+| name         | String with spaces  | The name given to the subject |
+| code         | A-Z0-9_ String code | The internal codename of the subject |
+| uapvHarpege  | A-Z0-9_ String code | Harpège (RH for universities) identifier |
+| searchString | String              | Meaningful items for searches |
+
+## `GET api/enseignants`
+
+Get all the `Enseignant` (*Enseignant*) available.
+
+```js
+{
+  "results": [
+    {
+      "letter": "G",
+      "names": [
+        {
+          "name": "Gordon Freeman",
+          "code": "1337",
+          "uapvHarpege": "420",
+          "searchString": "Gordon Freeman"
+        }
+      ]
+    },
+    {
+      "letter": "T",
+      "names": [
+        {
+          "name": "Tamamo No Mae",
+          "code": "8888",
+          "uapvHarpege": "fox 001",
+          "searchString": "Tamamo No Mae"
+        }
+      ]
+    },
+  ]
+}
+```
+
+## `GET api/events_enseignant/{int:uapvHarpege}`
+Get all the `Enseignant` (*Enseignant*) events.
+
+```js
+{
+  "results": [
+    {
+      "code": null,
+      "start": "2020-11-06T09:00:00+00:00",
+      "end": "2020-11-06T10:30:00+00:00",
+      "title": "Matière : BIOLOGIE DE LA REPRODUCTION VE\nEnseignant : Gordon Freeman\nTD : Gr A TP, Gr B TP, Gr C & CMI TP, Gr E TP, Gr F TP\nSalle : Amphithéatre AGROSC\nType : CM\n",
+      "type": "CM",
+      "memo": null
+    },
+    {
+      "code": null,
+      "start": "2020-12-18T07:30:00+00:00",
+      "end": "2020-12-18T11:30:00+00:00",
+      "title": "Annulation : \nMatière : BIOLOGIE DE LA REPRODUCTION VE\nEnseignant : Gordon Freeman\nTD : Gr B TP\nSalle : TP B123 (Biologie microscopie)\nType : TP\n",
+      "type": "Annulation",
+      "memo": null
+    }
+  ]
+}
+```
+
+| field        | type    | description |
+| -----------: | :------ | :---------- |
+| code         | String? | Maybe some internal code |
+| start        | Date    | The beginning date of the event |
+| end          | Date    | The finishing date of the event |
+| title        | String  | `\n` delimited `key : Value` map. Note that is the `key` ends with `s` it'll be an `, ` delimited array |
+| type         | String  | See the "*Salle* event types" |
+| memo         | String  | A special information about the event. Almost always `null`. Ingored in parsing. |
+
+> *Note :* The `code` seems to always be a null value. I've also almost never seen the value of `memo` set to something.
+
+
 # Using the *ressouce* API
 
 > *Warning* I don't kown how useful this is, so it may be a good idea to IGNORE THIS.
