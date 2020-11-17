@@ -17,6 +17,17 @@ The answer of most of (any ?) api call is a JSON object, matching the following 
 ```
 So that, checking if `results` is a key of the root JSON could get you a quick idea on how valid the answer is. I've discovered that sometimes the error code is served over the `HTTP 200` answer, so don't forget to check this too !
 
+## I want my edt NOW !
+
+1. Query the [*Elements*](#working-with-elements) for your formation `code`, mine is `ilsen`
+2. Get the [*PromotionEvents*](#working-with-promotion) and parse it. You're done.
+
+> Wait, there's too much informations.
+
+1. Query the [*Elements*](#working-with-elements) for your formation `code`, mine is `ilsen`
+2. Get the [*TDOptions*](#working-with-tdoptions) parse it, select only your options on it.
+3. Fetch all the [*TDOptionsEvents*](#tdoptionsevent-object) and parse it.
+
 # Working with *Salles*
 
 ## *Salle* object
@@ -393,6 +404,124 @@ Get all the `Enseignant` (*Enseignant*) events.
 | memo         | String  | A special information about the event. Almost always `null`. Ingored in parsing. |
 
 > *Note :* The `code` seems to always be a null value. I've also almost never seen the value of `memo` set to something.
+
+# Working with *PromotionEvents*
+
+## *PromotionEvents* object
+
+| field        | type                | description |
+| -----------: | :------------------ | :---------- |
+| code         | String with spaces  | The name given to the promotion |
+| start        | Date    | The beginning date of the event |
+| end          | Date    | The finishing date of the event |
+| title        | String  | `\n` delimited `key : Value` map. Note that is the `key` ends with `s` it'll be an `, ` delimited array |
+| type         | String    | Refers to the [following section](#salle-event-types) |
+| memo         | String    | A special information about the event. Almost always `null`. |
+
+## `GET api/events_promotion/{str:code}`
+
+Get all the `events_promotion` (*PromotionEvents*) events.
+
+Example :
+`GET api/events_promotion/2-M2EN`
+
+Would produce a similar output :
+```js
+{
+  "results": [
+    {
+      "code": "2-M2EN",
+      "start": "2020-09-14T08:00:00+00:00",
+      "end": "2020-09-14T09:30:00+00:00",
+      "title": "Matière : Rentree specifique\nEnseignants : REDACTED Name, REDACTED Name, REDACTED Name\nPromotions : M1 INGE DU LOGICIEL DE LA SOCIETE NUM (ILSEN), M1 INTELLIGENCE ARTIFICIELLE (IA), M1 SYSTEMES INFORMATIQUES COMMUNICANTS (SICOM), M2 INGE DU LOGICIEL DE LA SOCIETE NUM (ILSEN), M2 INTELLIGENCE ARTIFICIELLE (IA), M2 SYSTEMES INFORMATIQUES COMMUNICANTS (SICOM)\nTD : 2, PRE-RENTREES SPECIFIQUES 3\nSalles : Amphi Ada, Amphi Blaise\nMémo : \"CERI\"\n",
+      "type": "",
+      "memo": null
+    },
+    {
+      "code": "2-M2EN",
+      "start": "2020-11-19T12:00:00+00:00",
+      "end": "2020-11-19T15:00:00+00:00",
+      "title": "Matière : UCE 3 APPLICATION BI\nEnseignant : REDACTED Name\nTD : IA-IL-CLA, M2IL-Cla\nSalle : Stat 4 = Info - C 131\nType : TP\n",
+      "type": "TP",
+      "memo": null
+    }
+  ]
+}
+```
+
+# Working with *TDOptions*
+
+## *TDOption* object
+
+| field        | type                | description |
+| -----------: | :------------------ | :---------- |
+| display      | String with spaces  | The name given to the option |
+| code         | String(int)    | The identifier of the option |
+
+## `GET api/tdoptions/{str:code}`
+
+Get all the `TDOption` (*TDOption*) events for a given `code`.
+
+Example :
+`GET api/tdoptions/2-M2EN`
+
+Would produce a similar output :
+```js
+{
+  "results": [
+    {
+      "display": "m2il-alt",
+      "code": "4132"
+    },
+    {
+      "display": "m2il-cla",
+      "code": "4133"
+    }
+  ]
+}
+```
+
+## *TDOptionsEvent* object
+
+| field        | type                | description |
+| -----------: | :------------------ | :---------- |
+| code         | String with spaces  | The name given to the promotion |
+| start        | Date    | The beginning date of the event |
+| end          | Date    | The finishing date of the event |
+| title        | String  | `\n` delimited `key : Value` map. Note that is the `key` ends with `s` it'll be an `, ` delimited array |
+| type         | String    | Refers to the [following section](#salle-event-types) |
+| memo         | String    | A special information about the event. Almost always `null`. |
+
+## `GET api/events_tdoption/{[str:code]1+}`
+
+Get all the events for a given `code` list (`-` separated).
+
+Example :
+`GET api/events_tdoption/4132-4133`
+
+Would produce a similar output :
+```js
+{
+  "results": [
+    {
+      "code": null,
+      "start": "2020-09-21T11:00:00+00:00",
+      "end": "2020-09-21T15:30:00+00:00",
+      "title": "Matière : UCE 1 E-COM ET E-MOBILITE\nEnseignant : REDACTED Name\nTD : E-com\nSalles : S2 BIS = C 038, Stat 3 = Info - C 135\nType : TP\n",
+      "type": "TP",
+      "memo": null
+    },
+    {
+      "code": null,
+      "start": "2020-10-22T06:30:00+00:00",
+      "end": "2020-10-22T08:00:00+00:00",
+      "title": "Matière : UCE 3 SECURITE DANS LES SYSTEM\nEnseignant : PAPEGNIES Etienne\nPromotions : M2 INGE DU LOGICIEL DE LA SOCIETE NUM (ILSEN), M2 SYSTEMES INFORMATIQUES COMMUNICANTS (SICOM)\nTD : IA-IL-ALT, IA-IL-CLA, IA-SI-ALT, IA-SI-CLA\nSalle : Amphi Ada\nType : CM\n",
+      "type": "CM",
+      "memo": null
+    }
+  ]
+}
+```
 
 
 # Using the *ressouce* API
