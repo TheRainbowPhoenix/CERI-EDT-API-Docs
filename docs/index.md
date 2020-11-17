@@ -176,6 +176,7 @@ JSON answer example :
 ```
 
 Return objects under `results` :
+
 | field        | type                | description |
 | -----------: | :------------------ | :---------- |
 | code         | String with spaces  | The name given to the classroom |
