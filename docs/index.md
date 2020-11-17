@@ -20,7 +20,7 @@ So that, checking if `results` is a key of the root JSON could get you a quick i
 ## I want my edt NOW !
 
 1. Query the [*Elements*](#working-with-elements) for your formation `code`, mine is `ilsen`
-2. Get the [*PromotionEvents*](#working-with-promotion) and parse it. You're done.
+2. Get the [*PromotionEvents*](#working-with-promotionevents) and parse it. You're done.
 
 > Wait, there's too much informations.
 
@@ -407,7 +407,7 @@ Get all the `Enseignant` (*Enseignant*) events.
 
 # Working with *PromotionEvents*
 
-## *PromotionEvents* object
+## *PromotionEvent* object
 
 | field        | type                | description |
 | -----------: | :------------------ | :---------- |
