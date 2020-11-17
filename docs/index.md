@@ -183,7 +183,7 @@ Return objects under `results` :
 | start        | Date    | The beginning date of the event |
 | end          | Date    | The finishing date of the event |
 | title        | String  | `\n` delimited `key : Value` map. Note that is the `key` ends with `s` it'll be an `, ` delimited array |
-| type         | String    | Refers to the following section |
+| type         | String    | Refers to the [following section](#salle-event-types) |
 | memo         | String    | A special information about the event. Almost always `null`. |
 
 > *Note :* The `code` seems to always be a null value. I've also almost never seen the value of `memo` set to something.
@@ -389,7 +389,7 @@ Get all the `Enseignant` (*Enseignant*) events.
 | start        | Date    | The beginning date of the event |
 | end          | Date    | The finishing date of the event |
 | title        | String  | `\n` delimited `key : Value` map. Note that is the `key` ends with `s` it'll be an `, ` delimited array |
-| type         | String  | See the "*Salle* event types" |
+| type         | String  | See the ["*Salle* event types"](#salle-event-types) |
 | memo         | String  | A special information about the event. Almost always `null`. Ingored in parsing. |
 
 > *Note :* The `code` seems to always be a null value. I've also almost never seen the value of `memo` set to something.
