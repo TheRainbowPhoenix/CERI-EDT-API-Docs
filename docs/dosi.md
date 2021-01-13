@@ -33,8 +33,8 @@ from urllib import parse
 
 url = "https://api-dosi.univ-avignon.fr/partage/v1/Token/getToken"
 payload = {
-    'user': 'edt',
-    'passClient': php_md5('3dT1NliGn3')
+    'user': 'username_here',
+    'passClient': php_md5('password_here')
 }
 r = requests.post(url, data=payload)
 print(r.text)
