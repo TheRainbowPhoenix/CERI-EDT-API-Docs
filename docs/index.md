@@ -3,6 +3,10 @@
 The main API endpoint is, at time of the writing, located at `https://edt-api.univ-avignon.fr/app.php/`. Even if the url looks odd with `app.php/`, you have to use it that way.
 This url will be later referred as `GET` or `POST`, so when you read `GET api/something` you have to understand that the full url is a `GET` request at `https://edt-api.univ-avignon.fr/app.php/api/something`.
 
+## If you're not here for the EDT-API
+No problem ! There's a doc about the obscure [dosi-api right here](dosi.md) and I'm plannig writing one about the [partage SOAP Mail](partage.md) that will teach you how to send mail from form avignon-university mailbox ! 
+There's also a bunch of very obscures API like the Aladin or Appigs but I'm not willing to document it atm since it got some serious flaws.
+
 ## Basic REST answer
 
 The answer of most of (any ?) api call is a JSON object, matching the following structure :
