@@ -59,5 +59,5 @@ Where class will be very likely to begins with an uppercase letter, like "Calend
 If you do GET, simply add the elements at the end of the URL in the old-HTML way: `&key=value`. 
 
 # Sources
-Reverse DNS scannings
-https://github.com/UAPV for parts of the source code
+- Reverse DNS scannings
+- [UAPV](https://github.com/UAPV) for parts of the source code
